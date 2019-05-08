@@ -47,11 +47,29 @@ Ab *insertarValor( Ab *arbol, char valor ){
 		if( arbol->hijo_izquierdo == NULL){
 			arbol->hijo_izquierdo = insertarValor(arbol->hijo_izquierdo,valor);
 		}
-		else{
+		else if(arbol->hijo_derecho == NULL){
 			arbol->hijo_derecho = insertarValor(arbol->hijo_derecho,valor);
+		}
+		else if(arbol->hijo_izquierdo->valor == 'N'){
+			arbol->hijo_derecho = insertarValor(arbol->hijo_derecho,valor);
+		}
+		else if(arbol->hijo_derecho->valor == 'N'){
+			arbol->hijo_izquierdo = insertarValor(arbol->hijo_izquierdo,valor);
 		}
 	}
 	return arbol;	
+}
+
+Ab *convertirN(Ab *arbol){
+	if( arbol!=NULL ){
+		if(arbol->valor == 'N'){
+			arbol = NULL;
+		}else{
+		arbol->hijo_izquierdo = convertirN(arbol->hijo_izquierdo);
+		arbol->hijo_derecho = convertirN(arbol->hijo_derecho);
+		}	
+	}
+	return arbol;
 }
 
 //generar arbol binario en memoria, a partir de un txt
@@ -61,19 +79,21 @@ Ab *deserializar(){
 	char valor;
 	while( !feof(archivo) ){
 		valor = fgetc(archivo);
+		printf("%c \n",valor);
 		arbolBinario = insertarValor(arbolBinario,valor);
 	}
 	
 }
 
-void recorrerOrdenAbb(Ab *arbol){
-	if( arbol==NULL ){
-		printf("N");		
+void recorrerOrdenAb(Ab *arbol){
+	if( arbol!=NULL ){
+		printf("%c ",arbol->valor);
+		recorrerOrdenAb(arbol->hijo_izquierdo);
+		recorrerOrdenAb(arbol->hijo_derecho);	
 	}
 	else{
-		recorrerOrdenAbb(arbol->hijo_izquierdo);
-		printf("%i \n",arbol->valor);
-		recorrerOrdenAbb(arbol->hijo_derecho);
+		
+		printf("N");	
 	}
 }
 

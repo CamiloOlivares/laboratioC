@@ -3,8 +3,18 @@
 #include "arbolBin.h"
 
 
-int main(){
+void main(){
+	Ab *arbol = iniciarArbolBinario();
+	arbol = insertarValor(arbol,'1');
+	arbol = insertarValor(arbol,'N');
+	arbol = insertarValor(arbol,'2');
+	recorrerOrdenAb(arbol);
+	convertirN(arbol);
+	printf("\n");
+	recorrerOrdenAb(arbol);
+	printf("\n");
+	//arbol = deserializar();
+	//recorrerOrdenAb(arbol);
 	
-	Ab *arbol = deserializar();
-	recorrerOrdenAbb(arbol);
+
 }
