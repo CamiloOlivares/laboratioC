@@ -1,16 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "arbolBin.h"
+#include "arbolBinario.h"
 
 
 void main(){
 	Ab *arbol = iniciarArbolBinario();
-	arbol = insertarValor(arbol,'1');
-	arbol = insertarValor(arbol,'N');
-	arbol = insertarValor(arbol,'2');
-	recorrerOrdenAb(arbol);
-	convertirN(arbol);
-	printf("\n");
+	insertarAB(arbol,'1');
+	printf("%c",arbol->valor);
+	insertarAB(arbol,'2');
 	recorrerOrdenAb(arbol);
 	printf("\n");
 	//arbol = deserializar();

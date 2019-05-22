@@ -44,13 +44,21 @@ Ab *insertarValor( Ab *arbol, char valor ){
 		arbol->hijo_derecho = NULL;	
 	}
 	else{
-		if( arbol->hijo_izquierdo == NULL){
-			arbol->hijo_izquierdo = insertarValor(arbol->hijo_izquierdo,valor);
+		if( arbol->hijo_izquierdo == NULL || (arbol->hijo_izquierdo->valor != 'N' && arbol->hijo_derecho != NULL) ){
+			if(arbol->hijo_izquierdo == NULL){
+				arbol->hijo_izquierdo = insertarValor(arbol->hijo_izquierdo,valor);
+			}
+			else if(arbol->hijo_izquierdo->hijo_izquierdo != NULL && arbol->hijo_izquierdo->hijo_derecho!=NULL){
+				if(arbol->hijo_derecho->hijo_izquierdo == NULL || arbol->hijo_derecho->hijo_izquierdo == NULL){
+					arbol->hijo_derecho = insertarValor(arbol->hijo_derecho,valor);
+				}
+			}
+			
 		}
-		else if(arbol->hijo_derecho == NULL){
+		else if(arbol->hijo_derecho == NULL || arbol->hijo_derecho->valor != 'N'){
 			arbol->hijo_derecho = insertarValor(arbol->hijo_derecho,valor);
 		}
-		else if(arbol->hijo_izquierdo->valor == 'N'){
+		else if(arbol->hijo_izquierdo->valor == 'N' && arbol->hijo_derecho->valor != 'N'){
 			arbol->hijo_derecho = insertarValor(arbol->hijo_derecho,valor);
 		}
 		else if(arbol->hijo_derecho->valor == 'N'){
@@ -67,7 +75,8 @@ Ab *convertirN(Ab *arbol){
 		}else{
 		arbol->hijo_izquierdo = convertirN(arbol->hijo_izquierdo);
 		arbol->hijo_derecho = convertirN(arbol->hijo_derecho);
-		}	
+		}
+	
 	}
 	return arbol;
 }
@@ -81,9 +90,11 @@ Ab *deserializar(){
 		valor = fgetc(archivo);
 		printf("%c \n",valor);
 		arbolBinario = insertarValor(arbolBinario,valor);
+		printf("%c \n",arbolBinario->valor);
 	}
 	
 }
+
 
 void recorrerOrdenAb(Ab *arbol){
 	if( arbol!=NULL ){
